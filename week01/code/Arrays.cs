@@ -8,12 +8,19 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Establish an array to return
+        double[] multiples = new double[length];
 
-        return []; // replace this return statement with your own
+        // Make a loop to caluclate the multiples
+        for (int i = 0; i < multiples.Length; i++)
+        {
+            multiples[i] = number * (i + 1);
+        }
+
+        // return the array
+        return multiples;
+
+    
     }
 
     /// <summary>
@@ -23,11 +30,23 @@ public static class Arrays
     ///
     /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
     /// </summary>
-    public static void RotateListRight(List<int> data, int amount)
+    public static List<int> RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        /// check if the list is not empty
+        if (data == null || data.Count == 0)
+            return data;
+
+        /// find out how much to rotate the list especially
+        /// if we need to rotate more than the size of the list
+        amount = amount % data.Count;
+
+        /// rotate the list and take the last amount to front
+        List<int> rotatedList = new List<int>(data.GetRange(data.Count - amount, amount));
+
+        /// add the numbers left from the start to end
+        rotatedList.AddRange(data.GetRange(0, data.Count - amount));
+
+        /// return the list
+        return rotatedList;
     }
 }
