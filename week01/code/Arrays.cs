@@ -30,23 +30,27 @@ public static class Arrays
     ///
     /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
     /// </summary>
-    public static List<int> RotateListRight(List<int> data, int amount)
+    public static void RotateListRight(List<int> data, int amount)
     {
         /// check if the list is not empty
         if (data == null || data.Count == 0)
-            return data;
+            return;
 
         /// find out how much to rotate the list especially
         /// if we need to rotate more than the size of the list
         amount = amount % data.Count;
 
-        /// rotate the list and take the last amount to front
-        List<int> rotatedList = new List<int>(data.GetRange(data.Count - amount, amount));
+        /// only rotates if theres more than 0 numbers in the range
+        if (amount > 0){
+            /// defines a variable as the last number
+            var last_number = data.GetRange(data.Count - amount, amount);
 
-        /// add the numbers left from the start to end
-        rotatedList.AddRange(data.GetRange(0, data.Count - amount));
+            /// Removes the numbers from the index location
+            data.RemoveRange(data.Count - amount, amount);
 
-        /// return the list
-        return rotatedList;
+            /// puts the removed elements onto the front of the list
+            data.InsertRange(0, last_number);
+        }
+        
     }
 }
