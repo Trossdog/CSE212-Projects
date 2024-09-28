@@ -11,24 +11,57 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
-        Console.WriteLine("Test 1");
+        // Scenario: Add someone then serve them
+        // Expected Result: Error message
+        ///Console.WriteLine("Test 1");
+        Console.WriteLine("How big do you want the queue?");
+        string queue_size = Console.ReadLine();
+        int queue_size_int = int.Parse(queue_size);
 
-        // Defect(s) Found: 
+    
+        var service = new CustomerService(queue_size_int);
+        service.AddNewCustomer();
+        service.ServeCustomer();
+
+        // Defect(s) Found: Needs to display the customer served before deleting
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Properly queues the customers
+        // Expected Result: They should be in order
         Console.WriteLine("Test 2");
+        service = new CustomerService(queue_size_int);
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        service.ServeCustomer();
+        Console.WriteLine(service);
 
-        // Defect(s) Found: 
+        // Defect(s) Found: Nothing, just formatting is weird
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Does the max queue size get enforced?
+        // Expected Result: This should display an error message when the 3rd one is added
+        Console.WriteLine("Test 3");
+        service = new CustomerService(queue_size_int);
+        var max_size = service._maxSize;
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        service.AddNewCustomer();
+        
+        Console.WriteLine(service);
+        // Defect(s) Found: I found that I need to do >= instead of > in AddNewCustomer
+
+        // Test 4
+        // Scenario: Can I serve a customer if there isnt any?
+        // Expected Result: This should display some error message
+        Console.WriteLine("Test 4");
+        service = new CustomerService(queue_size_int);
+        service.ServeCustomer();
+        // Defect(s) Found: I need to check the length in serve_customer and display an error message
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +100,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,9 +121,14 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
+        if (_queue.Count <= 0) {
+            Console.WriteLine("No customers in queue.");
+        }
+        else{
+            var customer = _queue[0];
+            _queue.RemoveAt(0);
+            Console.WriteLine(customer);
+        }
     }
 
     /// <summary>
