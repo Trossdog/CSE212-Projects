@@ -11,7 +11,10 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        if (value == Data)
+        {
+            return;
+        }
 
         if (value < Data)
         {
@@ -33,13 +36,34 @@ public class Node
 
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        if (value == Data)
+        {
+            return true;
+        }
+
+        if (value < Data)
+        {
+            // Recursively search in the left subtree
+            return Left?.Contains(value) ?? false;
+        }
+        else
+        {
+            // Recursively search in the right subtree
+            return Right?.Contains(value) ?? false;
+        }
+        
     }
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        if (Left == null && Right == null)
+        {
+            return 1;
+        }
+
+        int leftHeight = Left?.GetHeight()?? 0;
+        int rightHeight = Right?.GetHeight()?? 0;
+
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
